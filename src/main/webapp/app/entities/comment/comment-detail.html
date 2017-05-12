@@ -1,0 +1,51 @@
+
+<div>
+    <h2><span data-translate="imageboardApp.comment.detail.title">Comment</span> {{vm.comment.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="imageboardApp.comment.content">Content</span></dt>
+        <dd>
+            <span>{{vm.comment.content}}</span>
+        </dd>
+        <dt><span data-translate="imageboardApp.comment.date">Date</span></dt>
+        <dd>
+            <span>{{vm.comment.date | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span data-translate="imageboardApp.comment.score">Score</span></dt>
+        <dd>
+            <span>{{vm.comment.score}}</span>
+        </dd>
+        <dt><span data-translate="imageboardApp.comment.post">Post</span></dt>
+        <dd>
+            <a ui-sref="post-detail({id:vm.comment.post.id})">{{vm.comment.post.id}}</a>
+        </dd>
+        <dt><span data-translate="imageboardApp.comment.author">Author</span></dt>
+        <dd>
+            {{vm.comment.author.id}}
+        </dd>
+        <dt><span data-translate="imageboardApp.comment.upvoters">Upvoters</span></dt>
+        <dd>
+            <span ng-repeat="upvoters in vm.comment.upvoters">
+                {{upvoters.id}}{{$last ? '' : ', '}}
+            </span>
+        </dd>
+        <dt><span data-translate="imageboardApp.comment.downvoters">Downvoters</span></dt>
+        <dd>
+            <span ng-repeat="downvoters in vm.comment.downvoters">
+                {{downvoters.id}}{{$last ? '' : ', '}}
+            </span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="comment-detail.edit({id:vm.comment.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

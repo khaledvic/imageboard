@@ -1,0 +1,94 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myCommentLabel" data-translate="imageboardApp.comment.home.createOrEditLabel">Create or edit a Comment</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.comment.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.comment.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="imageboardApp.comment.content" for="field_content">Content</label>
+            <input type="text" class="form-control" name="content" id="field_content"
+                    ng-model="vm.comment.content"
+                    required ng-maxlength="200"/>
+            <div ng-show="editForm.content.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.content.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.content.$error.maxlength" data-translate="entity.validation.maxlength" translate-value-max="200">
+                    This field cannot be longer than 200 characters.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="imageboardApp.comment.date" for="field_date">Date</label>
+                <div class="input-group">
+                    <input id="field_date" type="text" class="form-control" name="date" uib-datepicker-popup="{{dateformat}}" ng-model="vm.comment.date" is-open="vm.datePickerOpenStatus.date"
+                    required/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('date')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+            <div ng-show="editForm.date.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.date.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="imageboardApp.comment.score" for="field_score">Score</label>
+            <input type="number" class="form-control" name="score" id="field_score"
+                    ng-model="vm.comment.score"
+                    />
+        </div>
+
+        <div class="form-group">
+            <label data-translate="imageboardApp.comment.post" for="field_post">Post</label>
+            <select class="form-control" id="field_post" name="post" ng-model="vm.comment.post" ng-options="post as post.id for post in vm.posts track by post.id" required>
+            </select>
+        </div>
+        <div ng-show="editForm.post.$invalid">
+            <p class="help-block"
+                ng-show="editForm.post.$error.required" data-translate="entity.validation.required">
+                This field is required.
+            </p>
+        </div>
+        <div class="form-group">
+            <label data-translate="imageboardApp.comment.author" for="field_author">Author</label>
+            <select class="form-control" id="field_author" name="author" ng-model="vm.comment.author" ng-options="user as user.id for user in vm.users track by user.id" required>
+            </select>
+        </div>
+        <div ng-show="editForm.author.$invalid">
+            <p class="help-block"
+                ng-show="editForm.author.$error.required" data-translate="entity.validation.required">
+                This field is required.
+            </p>
+        </div>
+        <div class="form-group">
+            <label data-translate="imageboardApp.comment.upvoters" for="field_upvoters">Upvoters</label>
+            <select class="form-control" id="field_upvoters" multiple name="upvoters" ng-model="vm.comment.upvoters" ng-options="user as user.id for user in vm.users track by user.id"></select>
+        </div>
+        <div class="form-group">
+            <label data-translate="imageboardApp.comment.downvoters" for="field_downvoters">Downvoters</label>
+            <select class="form-control" id="field_downvoters" multiple name="downvoters" ng-model="vm.comment.downvoters" ng-options="user as user.id for user in vm.users track by user.id"></select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

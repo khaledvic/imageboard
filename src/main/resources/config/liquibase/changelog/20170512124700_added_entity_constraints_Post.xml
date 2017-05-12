@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <!--
+        Added the constraints for entity Post.
+    -->
+    <changeSet id="20170512124700-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="author_id"
+                                 baseTableName="post"
+                                 constraintName="fk_post_author_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="posts_id"
+                                 baseTableName="post_upvoters"
+                                 constraintName="fk_post_upvoters_posts_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="post"/>
+        <addForeignKeyConstraint baseColumnNames="upvoters_id"
+                                 baseTableName="post_upvoters"
+                                 constraintName="fk_post_upvoters_upvoters_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+        
+        <addForeignKeyConstraint baseColumnNames="posts_id"
+                                 baseTableName="post_downvoters"
+                                 constraintName="fk_post_downvoters_posts_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="post"/>
+        <addForeignKeyConstraint baseColumnNames="downvoters_id"
+                                 baseTableName="post_downvoters"
+                                 constraintName="fk_post_downvoters_downvoters_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+        
+    </changeSet>
+</databaseChangeLog>

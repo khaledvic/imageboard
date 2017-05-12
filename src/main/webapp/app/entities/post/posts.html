@@ -1,0 +1,78 @@
+<div>
+    <h2 data-translate="imageboardApp.post.home.title">Posts</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="post.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  data-translate="imageboardApp.post.home.createLabel">
+                        Create new Post
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span data-translate="global.field.id">ID</span></th>
+                    <th><span data-translate="imageboardApp.post.postTitle">Post Title</span></th>
+                    <th><span data-translate="imageboardApp.post.content">Content</span></th>
+                    <th><span data-translate="imageboardApp.post.date">Date</span></th>
+                    <th><span data-translate="imageboardApp.post.score">Score</span></th>
+                    <th><span data-translate="imageboardApp.post.author">Author</span></th>
+                    <th><span data-translate="imageboardApp.post.upvoters">Upvoters</span></th>
+                    <th><span data-translate="imageboardApp.post.downvoters">Downvoters</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="post in vm.posts track by post.id">
+                    <td><a ui-sref="post-detail({id:post.id})">{{post.id}}</a></td>
+                    <td>{{post.postTitle}}</td>
+                    <td>{{post.content}}</td>
+                        <td>{{post.date | date:'mediumDate'}}</td>
+                    <td>{{post.score}}</td>
+                    <td>
+                        {{post.author.id}}
+                    </td>
+                    <td>
+                        <span ng-repeat="upvoters in post.upvoters">
+                            {{upvoters.id}}{{$last ? '' : ', '}}
+                        </span>
+                    </td>
+                    <td>
+                        <span ng-repeat="downvoters in post.downvoters">
+                            {{downvoters.id}}{{$last ? '' : ', '}}
+                        </span>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="post-detail({id:post.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="post.edit({id:post.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="post.delete({id:post.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
