@@ -1,8 +1,10 @@
 package com.mycompany.imageboard.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.mycompany.imageboard.domain.Comment;
 import com.mycompany.imageboard.domain.Post;
 
+import com.mycompany.imageboard.repository.CommentRepository;
 import com.mycompany.imageboard.repository.PostRepository;
 import com.mycompany.imageboard.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -27,11 +29,13 @@ public class PostResource {
     private final Logger log = LoggerFactory.getLogger(PostResource.class);
 
     private static final String ENTITY_NAME = "post";
-        
-    private final PostRepository postRepository;
 
-    public PostResource(PostRepository postRepository) {
+    private final PostRepository postRepository;
+    private CommentRepository commentRepository;
+
+    public PostResource(PostRepository postRepository, CommentRepository commentRepository) {
         this.postRepository = postRepository;
+        this.commentRepository = commentRepository;
     }
 
     /**
@@ -101,6 +105,15 @@ public class PostResource {
         log.debug("REST request to get Post : {}", id);
         Post post = postRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(post));
+    }
+
+    @GetMapping("/posts/{id}/comments")
+    @Timed
+    public ResponseEntity<List<Comment>> getPostComments(@PathVariable
+                                                             Long id) {
+        log.debug("REST request to get Comments of Post : {}", id);
+        List<Comment> comments = commentRepository.findByPostId(id);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(comments));
     }
 
     /**

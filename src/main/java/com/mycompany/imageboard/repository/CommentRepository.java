@@ -22,4 +22,6 @@ public interface CommentRepository extends JpaRepository<Comment,Long> {
     @Query("select comment from Comment comment left join fetch comment.upvoters left join fetch comment.downvoters where comment.id =:id")
     Comment findOneWithEagerRelationships(@Param("id") Long id);
 
+    List<Comment> findByPostId(Long id);
+
 }

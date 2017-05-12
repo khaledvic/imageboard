@@ -2,9 +2,11 @@
     'use strict';
     angular
         .module('imageboardApp')
-        .factory('Post', Post);
+        .factory('Post', Post)
+        .factory('PostComments', PostComments);
 
     Post.$inject = ['$resource', 'DateUtils'];
+    PostComments.$inject = ['$resource'];
 
     function Post ($resource, DateUtils) {
         var resourceUrl =  'api/posts/:id';
@@ -37,6 +39,14 @@
                     return angular.toJson(copy);
                 }
             }
+        });
+    }
+
+    function PostComments ($resource) {
+        var resourceUrl = 'api/posts/:id/comments';
+
+        return $resource(resourceUrl, {}, {
+            'query': {method: 'GET', isArray: true}
         });
     }
 })();

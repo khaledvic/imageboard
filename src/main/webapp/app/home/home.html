@@ -21,6 +21,14 @@
                     </button>
                 </div>
                 <img class="img-responsive" ng-src="/images/{{post.content}}">
+                <div>
+                    {{post.comments.length}} comments - <a ng-click="toggleComments(post)">Show comments</a>
+                    <div ng-show="post.showComments">
+                        <div ng-repeat="comment in post.comments">
+                            {{comment.content}}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

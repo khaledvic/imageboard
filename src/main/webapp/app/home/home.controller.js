@@ -5,9 +5,9 @@
         .module('imageboardApp')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope', 'Principal', 'LoginService', 'Post', '$state'];
+    HomeController.$inject = ['$scope', 'Principal', 'LoginService', 'Post', 'PostComments', '$state'];
 
-    function HomeController ($scope, Principal, LoginService, Post, $state) {
+    function HomeController ($scope, Principal, LoginService, Post, PostComments, $state) {
         var vm = this;
 
         vm.account = null;
@@ -59,6 +59,12 @@
             if (post.score === undefined || post.score === null) {
                 post.score = 0;
             }
+            if (post.comments === null || post.comments === undefined) {
+                post.comments = PostComments.query({'id': post.id});
+            }
+            if (post.showComments === undefined) {
+                post.showComments = false;
+            }
         }
 
         $scope.isUpvoter = function (post) {
@@ -91,6 +97,10 @@
                 post.score = post.score - 1;
             }
             Post.update(post);
+        }
+
+        $scope.toggleComments = function (post) {
+            post.showComments = !post.showComments;
         }
     }
 })();
