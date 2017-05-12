@@ -5,9 +5,9 @@
         .module('imageboardApp')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope', 'Principal', 'LoginService', '$state'];
+    HomeController.$inject = ['$scope', 'Principal', 'LoginService', 'Post', '$state'];
 
-    function HomeController ($scope, Principal, LoginService, $state) {
+    function HomeController ($scope, Principal, LoginService, Post, $state) {
         var vm = this;
 
         vm.account = null;
@@ -28,6 +28,17 @@
         }
         function register () {
             $state.go('register');
+        }
+
+        vm.posts = [];
+
+        loadAll();
+
+        function loadAll() {
+            Post.query(function(result) {
+                vm.posts = result;
+                vm.searchQuery = null;
+            });
         }
     }
 })();
