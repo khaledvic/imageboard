@@ -5,8 +5,21 @@
         </div>
         <div class="col-md-8">
             <div ng-repeat="post in vm.posts">
-                <h3>{{post.postTitle}}</h3>
+                <h3>{{setupPost(post); post.postTitle}}</h3>
                 <div>Author: {{post.author.login}}</div>
+                <div>{{post.score}} points</div>
+                <div class="btn-group flex-btn-group-container">
+                    <button type="submit"
+                            ng-click="upvote(post)"
+                            class="btn btn-sm" ng-class="{ 'btn-success' : isUpvoter(post) }">
+                        <span class="glyphicon glyphicon-thumbs-up"></span>
+                    </button>
+                    <button type="submit"
+                            ng-click="downvote(post)"
+                            class="btn btn-sm" ng-class="{ 'btn-danger' : isDownvoter(post) }">
+                        <span class="glyphicon glyphicon-thumbs-down"></span>
+                    </button>
+                </div>
                 <img class="img-responsive" ng-src="/images/{{post.content}}">
             </div>
         </div>
