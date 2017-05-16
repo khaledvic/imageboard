@@ -4,6 +4,7 @@ import com.mycompany.imageboard.ImageboardApp;
 
 import com.mycompany.imageboard.domain.Post;
 import com.mycompany.imageboard.domain.User;
+import com.mycompany.imageboard.repository.CommentRepository;
 import com.mycompany.imageboard.repository.PostRepository;
 import com.mycompany.imageboard.web.rest.errors.ExceptionTranslator;
 
@@ -56,6 +57,9 @@ public class PostResourceIntTest {
     private PostRepository postRepository;
 
     @Autowired
+    private CommentRepository commentRepository;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -74,7 +78,7 @@ public class PostResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        PostResource postResource = new PostResource(postRepository);
+        PostResource postResource = new PostResource(postRepository, commentRepository);
         this.restPostMockMvc = MockMvcBuilders.standaloneSetup(postResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
