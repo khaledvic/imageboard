@@ -5,11 +5,11 @@
         .module('imageboardApp')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope', 'Principal', 'LoginService', 'Post', 'PostComments', '$state'];
+    HomeController.$inject = ['$scope', 'Principal', 'LoginService', 'Post', 'PostComments','Comment', '$state'];
 
-    function HomeController ($scope, Principal, LoginService, Post, PostComments, $state) {
+    function HomeController ($scope, Principal, LoginService, Post, PostComments,Comment, $state) {
         var vm = this;
-
+        vm.comment={}
         vm.account = null;
         vm.isAuthenticated = null;
         vm.login = LoginService.open;
@@ -101,6 +101,33 @@
 
         $scope.toggleComments = function (post) {
             post.showComments = !post.showComments;
+        }
+
+        $scope.addComment=    function(post) {
+            var pid=post.id;
+            console.log("pid:"+pid);
+            vm.isSaving = true;
+            vm.comment[pid].date= new Date().toISOString().split("T")[0];
+            vm.comment[pid].score=0;
+            vm.comment[pid].post=post;
+            vm.comment[pid].author=vm.account;
+            Comment.save(vm.comment[pid], onSaveSuccess, onSaveError);
+            
+             
+        }
+
+        function onSaveSuccess (result) {
+            vm.comment[result.post.id]=null;
+            //console.log(result)
+            $scope.$emit('imageboardApp:commentUpdate', result);
+            console.log(vm.posts);
+            loadAll();
+            vm.isSaving = false;
+        }
+
+        function onSaveError (err) {
+            console.log(err);
+            vm.isSaving = false;
         }
     }
 })();

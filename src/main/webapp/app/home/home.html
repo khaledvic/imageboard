@@ -29,6 +29,30 @@
                         </div>
                     </div>
                 </div>
+                <div>
+                    <form name="editForm{{post.id}}" role="form" novalidate ng-submit="addComment(post)" show-validation>
+
+                        <div class="form-group">
+                            <label class="control-label"  for="field_content{{post.id}}">Content</label>
+                            <input type="text" class="form-control" name="content" id="field_content{{post.id}}"
+                                    ng-model="vm.comment[post.id].content"
+                                    required ng-maxlength="200"/>
+                            <div ng-show="editForm{{post.id}}.content.$invalid">
+                                <p class="help-block"
+                                    ng-show="editForm{{post.id}}.content.$error.required" data-translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                                <p class="help-block"
+                                    ng-show="editForm{{post.id}}.content.$error.maxlength" data-translate="entity.validation.maxlength" translate-value-max="200">
+                                    This field cannot be longer than 200 characters.
+                                </p>
+                            </div>
+                        </div>
+                                <button type="submit" ng-disabled="editForm{{post.id}}.$invalid || vm.isSaving" class="btn btn-primary">
+                                    <span class="glyphicon glyphicon-save"></span>&nbsp;<span >Add comment</span>
+                                </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
